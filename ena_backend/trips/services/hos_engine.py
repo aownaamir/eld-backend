@@ -187,7 +187,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
                         "type": "off_duty",
                         "start": format_time(seg_start),
                         "end": format_time(seg_end),
-                        "note": "30min_break"
+                        "note": "break"
                     })
 
                 current_time = seg_end

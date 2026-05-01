@@ -10,13 +10,13 @@ from datetime import datetime
 def create_trip(request):
     data = request.data
 
+    print("Route recieved:", data)
     route = get_route(
         data["current_location"],
         data["pickup"],
         data["dropoff"],
     )
 
-    print("Route recieved:", data)
 
     logs = simulate_trip(
         distance_miles=route["distance"],
