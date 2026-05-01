@@ -5,21 +5,6 @@ load_dotenv()
 
 MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
 
-# def get_route(start, pickup, dropoff):
-#     # For now just simulate coordinates
-#     # You can upgrade later to real API
-
-#     return {
-#         "distance": 2800,  # miles
-#         "duration": 40,    # hours
-#         # "geometry": []     # frontend will use later
-#         "geometry": [
-#                     [-74.006, 40.7128],   # NYC
-#                     [-87.6298, 41.8781],  # Chicago
-#                     [-118.2437, 34.0522]  # LA
-#                 ]
-#     }
-
 import requests
 import urllib.parse
 
@@ -42,6 +27,7 @@ def geocode(place):
         raise Exception(f"Location not found: {place}")
 
     return data["features"][0]["center"]
+
 def get_route(current, pickup, dropoff):
     start = geocode(current)
     pick = geocode(pickup)
