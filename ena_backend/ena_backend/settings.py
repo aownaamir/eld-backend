@@ -130,4 +130,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://eld-frontend-pymc.vercel.app"]
+    "https://eld-frontend-pymc.vercel.app",
+    "https://eld-frontend-pymc-git-main-aown-aamirs-projects-a34989a3.vercel.app/",
+    "https://eld-frontend-pymc-qnl6gxoxs-aown-aamirs-projects-a34989a3.vercel.app/"
+    ]
