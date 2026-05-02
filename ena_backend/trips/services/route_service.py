@@ -46,8 +46,8 @@ def get_route(current, pickup, dropoff):
 
     route = res["routes"][0]
 
-    distance_miles = route["distance"] / 1609  # meters → miles
-    duration_hours = route["duration"] / 3600  # seconds → hours
+    distance_miles = route["distance"] / 1609  # meters into miles
+    duration_hours = route["duration"] / 3600  # seconds into hours
 
     geometry = route["geometry"]["coordinates"]
 

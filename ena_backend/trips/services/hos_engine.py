@@ -56,11 +56,10 @@ def simulate_trip(distance_miles, start_time, cycle_used):
 
         driving_today = 0
         break_taken = False
-        window_start = current_time  # 14hr window starts here
+        window_start = current_time  # 14hr window start
 
-        # -------------------
-        # 70-HOUR CYCLE CHECK
-        # -------------------
+        
+        # 70-HOUR CYCLE CHECK        
         if cycle_hours >= 70:
             reset_end = current_time + timedelta(hours=34)
 
@@ -93,9 +92,8 @@ def simulate_trip(distance_miles, start_time, cycle_used):
             current_time = day_end
             continue
 
-        # -------------------
+
         # PICKUP (once)
-        # -------------------
         if not pickup_done:
             raw_end = current_time + timedelta(hours=1)
             seg_start, seg_end, _ = clamp_segment(current_time, raw_end, day_end)
@@ -120,9 +118,8 @@ def simulate_trip(distance_miles, start_time, cycle_used):
                 current_time = day_end
                 continue
 
-        # -------------------
+        
         # DRIVING LOOP
-        # -------------------
         while driving_today < 11 and remaining_distance > 0:
 
             if cycle_hours >= 70:
@@ -137,7 +134,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
             drive_hours = min(drive_hours, 14 - window_used)
 
             distance_covered = drive_hours * speed
-            remaining_distance -= distance_covered
+            remaining_distance -= distance_covered #############################################
             distance_since_fuel += distance_covered
 
             raw_end = current_time + timedelta(hours=drive_hours)
@@ -156,6 +153,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
 
             if current_time >= day_end:
                 break
+
 
             # Fuel stop every 1000 miles
             if distance_since_fuel >= 1000:
@@ -177,6 +175,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
                 if current_time >= day_end:
                     break
 
+
             # 30-min break after 8hrs driving (once per day)
             if driving_today >= 8 and not break_taken:
                 raw_end = current_time + timedelta(minutes=30)
@@ -196,9 +195,9 @@ def simulate_trip(distance_miles, start_time, cycle_used):
                 if current_time >= day_end:
                     break
 
-        # -------------------
+
+
         # DROPOFF (once, when trip done)
-        # -------------------
         if remaining_distance <= 0 and not dropoff_done:
             raw_end = current_time + timedelta(hours=1)
             seg_start, seg_end, _ = clamp_segment(current_time, raw_end, day_end)
@@ -215,9 +214,8 @@ def simulate_trip(distance_miles, start_time, cycle_used):
             current_time = seg_end
             dropoff_done = True
 
-        # -------------------
-        # 70HR EXCEEDED → 34hr reset
-        # -------------------
+
+        # 70HR EXCEEDED to 34hr reset
         if cycle_hours >= 70:
             raw_end = current_time + timedelta(hours=34)
             seg_start, seg_end, _ = clamp_segment(current_time, raw_end, day_end)
@@ -233,6 +231,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
             current_time = seg_end
             cycle_hours = 0
 
+
         # 10hr sleeper between days
         elif not dropoff_done:
             raw_end = current_time + timedelta(hours=10)
@@ -247,7 +246,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
 
             current_time = seg_end
 
-        # Fill remaining day with off_duty
+        # remaining day with off_duty
         day_log = fill_day(day_log, current_time, day_end)
 
         logs.append({"day": len(logs) + 1,"segments": merge_segments(day_log)})
@@ -257,6 +256,7 @@ def simulate_trip(distance_miles, start_time, cycle_used):
             break
 
     return logs
+
 
 
 def merge_segments(segments):

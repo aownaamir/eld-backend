@@ -15,7 +15,8 @@ def create_trip(request):
         data["current_location"],
         data["pickup"],
         data["dropoff"],
-    )
+    )  
+    # distance, geometry, duration
 
 
     logs = simulate_trip(
@@ -24,10 +25,11 @@ def create_trip(request):
         start_time = datetime.now().replace(hour=6, minute=0, second=0, microsecond=0),
         cycle_used=data["cycle_used"]
     )
+    # day, logs
 
     return Response({
-    "route": route,
-    "logs": logs,
+    "route": route,      # distance, geometry, duration
+    "logs": logs,      # day, logs
     "summary": {
         "total_days": len(logs),
         "total_distance": route["distance"],
